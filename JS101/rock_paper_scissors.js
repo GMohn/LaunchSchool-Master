@@ -33,7 +33,7 @@ while (true) {
   let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
   let computerChoice = VALID_CHOICES[randomIndex];
 
-  #displayWinner(choice, computerChoice);
+  displayWinner(choice, computerChoice);
 
   prompt('Do you want to play again (y/n)?');
   let answer = readline.question().toLowerCase();

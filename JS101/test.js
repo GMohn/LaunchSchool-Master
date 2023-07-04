@@ -1,10 +1,15 @@
-function factors(number) {
-  let factors = [];
-  for (let divisor = 0; divisor <= number; divisor++) {
-    if (number % divisor === 0) {
-      factors.push(number / divisor);
+function isDotSeparatedIpAddress(inputString) {
+  let dotSeparatedWords = inputString.split(".");
+  if (dotSeparatedWords.length !== 4) {
+    return false;
+  }
+  for (let wordIdx = 0; wordIdx < dotSeparatedWords.length; wordIdx++) {
+    if (isAnIPNumber(dotSeparatedWords[wordIdx])) {
+      continue;
+    } else {
+      return false;
     }
   }
-  return factors;
+
+  return true;
 }
-console.log(factors(10));
