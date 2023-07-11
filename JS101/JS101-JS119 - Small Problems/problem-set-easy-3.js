@@ -148,7 +148,7 @@ function cleanUp(str) {
 }
 
 console.log(cleanUp("---what's my +*& line?"));    // " what s my line ") */
-
+/*
 let isPrimitive = (val) => {
 
   if (val === null) {
@@ -161,3 +161,41 @@ let isPrimitive = (val) => {
     console.log(true);
   }
 };
+ */
+
+/* What Century is That?
+Write a function that takes a year as input and returns the century. The return
+value should be a string that begins with the century number, and ends with
+'st', 'nd', 'rd', or 'th' as appropriate for that number.
+
+New centuries begin in years that end with 01. So, the years 1901 - 2000
+comprise the 20th century. */
+
+function century(num) {
+  let numStr = ['st', 'nd', 'rd', 'th'];
+  let centuryNum = Math.ceil(num / 100).toString();
+  let centuryNumTens = centuryNum % 100;
+  let centuryNumOnes = centuryNum[centuryNum.length - 1];
+  if (centuryNumTens > 13 || centuryNumTens < 10) {
+    if (centuryNumOnes === '1') {
+      return centuryNum + numStr[0];
+
+    } else if (centuryNumOnes === '2') {
+      return centuryNum + numStr[1];
+
+    } else if ( centuryNumOnes === '3') {
+      return centuryNum + numStr[2];
+    }
+  }
+  return centuryNum + numStr[3];
+}
+
+console.log(century(2000));        // "20th"
+console.log(century(2001));        // "21st"
+console.log(century(1965));        // "20th"
+console.log(century(256));         // "3rd"
+console.log(century(5));           // "1st"
+console.log(century(10103));       // "102nd"
+console.log(century(1052));        // "11th"
+console.log(century(1127));        // "12th"
+console.log(century(11201));       // "113th"
