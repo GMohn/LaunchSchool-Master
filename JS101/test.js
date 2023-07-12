@@ -13,9 +13,4 @@
 
   return true;
 } */
-let a = 10;
-if (a = 0) {
-  console.log(`this is ${a}`);
-} else {
-  console.log("not a");
-}
+

@@ -39,6 +39,7 @@ backwards. For this problem, the case matters and all characters matter. */
 function isPalindrome(str) {
   let arrStr = str.split('');
   let arrStrReverse = [...arrStr].reverse();
+  // eslint-disable-next-line id-length
   for (let i  = 0; i < arrStr.length; i++) {
     if (arrStr[i] === arrStrReverse[i]) {
       continue;

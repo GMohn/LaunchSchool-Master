@@ -14,9 +14,7 @@ function rotateArray(arr) {
     return arr;
   } else {
     let tempArr = arr.slice(0);
-
     let poppedEle = tempArr.shift();
-
     tempArr.push(poppedEle);
     return tempArr;
   }
