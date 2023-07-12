@@ -163,7 +163,7 @@ let isPrimitive = (val) => {
 };
  */
 
-/* What Century is That?
+/* Problem 10 What Century is That?
 Write a function that takes a year as input and returns the century. The return
 value should be a string that begins with the century number, and ends with
 'st', 'nd', 'rd', or 'th' as appropriate for that number.
@@ -171,7 +171,7 @@ value should be a string that begins with the century number, and ends with
 New centuries begin in years that end with 01. So, the years 1901 - 2000
 comprise the 20th century. */
 
-function century(num) {
+/* function century(num) {
   let numStr = ['st', 'nd', 'rd', 'th'];
   let centuryNum = Math.ceil(num / 100).toString();
   let centuryNumTens = centuryNum % 100;
@@ -198,4 +198,4 @@ console.log(century(5));           // "1st"
 console.log(century(10103));       // "102nd"
 console.log(century(1052));        // "11th"
 console.log(century(1127));        // "12th"
-console.log(century(11201));       // "113th"
+console.log(century(11201));       // "113th" */
