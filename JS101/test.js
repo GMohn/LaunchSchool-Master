@@ -1,4 +1,4 @@
-function isDotSeparatedIpAddress(inputString) {
+/* function isDotSeparatedIpAddress(inputString) {
   let dotSeparatedWords = inputString.split(".");
   if (dotSeparatedWords.length !== 4) {
     return false;
@@ -12,4 +12,10 @@ function isDotSeparatedIpAddress(inputString) {
   }
 
   return true;
+} */
+let a = 10;
+if (a = 0) {
+  console.log(`this is ${a}`);
+} else {
+  console.log("not a");
 }
