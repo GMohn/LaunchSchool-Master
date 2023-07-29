@@ -14,7 +14,7 @@
   return true;
 } */
 
-let pets = {
+/* let pets = {
   jerry: {species: "cat", age: 3},
   luna: {species: "dog", age: 5},
   goldin: {species: "fish", age: 1}
@@ -31,4 +31,8 @@ function flattenObj(animals) {
 }
 
 flattenObj(pets);
-console.log(pets);
+console.log(pets); */
+/* for (i = 0; i < 127; i++) {
+  console.log(`${String.fromCharCode(i)} is ${i}`);
+} */
+console.log(Number("a"));
