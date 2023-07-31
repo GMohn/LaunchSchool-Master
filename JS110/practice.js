@@ -300,7 +300,7 @@ Algorithm:
 - If they all match, append character to longestSubStr,
 - If they do not, return longestSubStr
 */
-
+/* 
 function createGreeter(name) {
   return {
     name,
@@ -327,3 +327,177 @@ function createGreeter(name) {
 }
 const helloVictor = createGreeter('Victor');
 helloVictor.greet('morning');
+ */
+
+ /*
+For a given nonempty string `s` find a minimum substring `t` and the maximum number `k`, such that the entire string `s` is equal to `t` repeated `k` times.
+
+The input string consists of lowercase latin letters.
+*/
+
+
+/*
+P -> Understanding the Problem
+------------------------------
+Input:
+- String
+
+Output:
+- Array (containing substring and number, in that order)
+
+
+Rules/Important Points:
+- "Minimum substring": smallest possible substring
+- What is a "substring" in this context?
+  - a "cut out", in the same order, of the original string. can be of single character length
+- Find "cut-out" of the input string, when repeated enough, is equal to the original string
+- input string will only consist of lowercase latin (alphabetic) letters
+- input will never be an empty string
+
+
+E -> Examples/Test Cases
+------------------------
+Observe examples/test cases in order to:
+
+  1) Confirm our understanding of the problem
+  2) Check for implicit requirements (implied requirements that are not explicitly stated in the problem statement), if there are any
+
+
+-- Mental Model Intermission --
+  - Do I have a general idea of how I'm going to get from input to output?
+
+    - Generating substrings of length that are multiples of input length
+
+    "ababab": [] -> ["a", "ab", "aba", "ababab"]
+
+    - Check each of these substrings, to see if they are equal to the input when repeated enough
+
+    "aaaaaa", "ababab", "abaaba", "ababab"
+
+    - Calculate how many times the correct string had to be multiplied into the input in order to match
+    ["ab", 3]
+
+D -> Data Structure
+-------------------
+What data structure am I going to use? Array or object? If needed.
+
+String (optional)
+
+
+A -> Algorithm
+--------------
+- Step-by-step implementation details on HOW to get from input to output
+- Don't name specific methods or syntax
+  - O Iterate
+  - X forEach
+  - X for loop
+
+
+- Generating substrings of length that are multiples of input length
+
+  - Declare validSubstrings
+  - Iterate from 1 to input string length (inclusive)
+    - if input string length divided by current length has remainder 0
+      - add substring of current length to `validSubstrings`
+    - else nothing
+  - return validSubstrings
+
+- Check each of these substrings, to see if they are equal to the input when repeated enough
+  "ab"
+  6 / 2 = 3
+  "ab" x 3 = "ababab"
+  "ababab" === "ababab"
+  ["ab", 3]
+
+  - iterate through `validSubstrings`
+    - declare `substringLength` and initalize to current substring length
+    - declare `repetitionRequired` and initialize to input length divided by `substringLength`
+    - if substring repeated `repetitionRequired` times is equal to input string
+      - return [substring, repetitionRequired]
+
+*/
+
+/*
+C -> Coding with Intent
+-----------------------
+- We're **translating** our algorithm into code
+  - If something goes wrong, go back to you algorithm and fix that first, then translate that fix back into code
+
+!! ** - Test your code frequently ** !!
+
+
+
+Chase
+-----
+PEDAC
+declare variable LEN and init to length of string 
+declare chunk
+
+Iterate through string  
+  - assign chunk to portion of string from string[0] to current index  in iteration // (index + 1)
+    - if chunk repeated (LEN / length of chunk) times is strictly equal to input string, return chunk and (LEN / length of chunk)
+
+*/
+
+function repeatedSubstring (inputString) {
+  const LEN = inputString.length;
+  let chunk;
+
+  for (let index = 0; index < LEN; index += 1) {
+    chunk = inputString.slice(0, index + 1);
+
+    if (chunk.repeat(LEN / chunk.length) === inputString) return [chunk, (LEN / chunk.length)];
+  }
+}
+
+
+console.log(repeatedSubstring("ababab")); // ["ab", 3]
+console.log(repeatedSubstring("abcde"));// ["abcde", 1]
+
+
+/*
+Chris
+-----
+Algorithm:
+
+Declare valid substrings array
+Declare highestSubstring
+Declare highestCount
+
+Iterate i from 1 to str length - 1
+  if i divides evenly into str length
+    Add substring from 0 to i to valid array
+
+Iterate valid substring array // using repeat() is probably better here
+  Declare currentSubstring
+  Declare counter
+  
+  For each substring, repeatedly add it to currentSubstring until it equals str length
+  Increment counter
+    if currentSubstring equals string, 
+      Check to see if counter is greater than highestCount
+        if higher, change highestCount to counter and highestSubstring to currentSubstring
+
+return array with highestSubstring and highestCount
+
+*/
+
+/*
+Geoffrey
+--------
+Algorithm:
+[aaa] aaa/a = k = 3 check a and 'aa' i = 1 then a and 'a' 
+  - Check each substring in Array is equal to adj substring in original
+      - The quotient of strLength and currentStrLength is k repeated times
+    - loop through k times with i = 1 initialized as iterator
+      - If the substring is equal to adj substr of equal length
+        - check if iteration has been k times 
+          - if it has then the substr is is equal to entire string k times
+            - return tuple of substr, k
+        - move to check next substr in original (offset substr = (length * i) - 1)
+        - continue to next part of original string
+        
+      - else, the substr is not equal to next adj substr
+        - break and check next element in validSubstring array
+*/
+

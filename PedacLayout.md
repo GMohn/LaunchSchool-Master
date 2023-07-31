@@ -1,22 +1,36 @@
 PEDAC
 
-Problem: 
+P -> Understanding the Problem
+------------------------------
+Input:
+- 
 
-Input: 
+Output:
+- 
 
-Output: 
+
+Rules/Important Points:
+
+
+E -> Examples/Test Cases
+
+-- Mental Model Intermission --
+  - Do I have a general idea of how I'm going to get from input to output?
 
 Problem type: 
 
 
-Examples / Test Cases:
 
-Rules:
-
-
-
-Data Structure:
+D -> Data Structure
+-------------------
+What data structure am I going to use? Array or object?
 
 
 
-Algorithm: 
+A -> Algorithm
+--------------
+- Step-by-step implementation details on HOW to get from input to output
+- Don't name specific methods or syntax
+
+C -> Coding with Intent
+-----------------------
