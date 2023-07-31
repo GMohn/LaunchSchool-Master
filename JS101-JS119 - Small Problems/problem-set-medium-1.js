@@ -643,3 +643,277 @@ console.log(leastCommonChar("Happy birthday!") === ' ');
 console.log(leastCommonChar("aaaaaAAAA") === 'a');
 
 // The tests above should each log "true".*/
+
+
+
+/* Lettercase Percentage Ratio
+Write a function that takes a string and returns an object containing the following three properties:
+
+the percentage of characters in the string that are lowercase letters
+the percentage of characters that are uppercase letters
+the percentage of characters that are neither
+You may assume that the string will always contain at least one character. 
+
+PEDAC
+
+P -> Understanding the Problem
+------------------------------
+Input: string
+- 
+
+Output: object containing percent of lowercase char, upper case char and neither
+- 
+
+
+Rules/Important Points:
+Need to check upper and lower case or neither
+percentage is a string of a float
+
+E -> Examples/Test Cases
+
+-- Mental Model Intermission --
+  - Do I have a general idea of how I'm going to get from input to output?
+  - calculate percentage at end of iterating through string
+  - set values of each property ( lowercase, uppercase, neither )
+
+
+
+
+D -> Data Structure
+-------------------
+What data structure am I going to use? Array or object?
+object that is populated after calculation
+
+
+
+A -> Algorithm
+--------------
+- Step-by-step implementation details on HOW to get from input to output
+- Don't name specific methods or syntax
+
+put string into array of chracters
+keep count of lowercase uppercase and neither characters
+initialize returnObj with properties lowercase, uppercase, neither
+iterate through array of characters
+  - if char is between 'a' and 'z' 
+    - increment lowercase
+  - if char is between 'A' and 'Z'
+    - increment uppercase
+  - else
+    - increment neither
+populate values with count / string.length
+return object
+C -> Coding with Intent
+-----------------------*/
+
+function letterPercentages(str) {
+  let lowercase = 0;
+  let uppercase = 0;
+  let neither = 0;
+  let strLen = str.length;
+  let retObj = {lowercase: "", uppercase: "", neither: ""};
+  let strArr = str.split('');
+
+  strArr.forEach((char) => {
+    if (char >= 'a' && char <= 'z') {
+      lowercase++;
+    }
+    else if (char >= 'A' && char <= 'Z') {
+      uppercase++;
+    }
+    else neither++; 
+  });
+  retObj.lowercase = String(((lowercase / strLen) * 100).toFixed(2));
+  retObj.uppercase = String(((uppercase / strLen) * 100).toFixed(2));
+  retObj.neither = String(((neither / strLen) * 100).toFixed(2));
+  return retObj;
+}
+letterPercentages('abCdef 123');
+// { lowercase: "50.00", uppercase: "10.00", neither: "40.00" }
+
+letterPercentages('AbCd +Ef');
+// { lowercase: "37.50", uppercase: "37.50", neither: "25.00" }
+
+letterPercentages('123');
+// { lowercase: "0.00", uppercase: "0.00", neither: "100.00" }
+
+/* Triangle Sides
+A triangle is classified as follows:
+
+Equilateral: All three sides are of equal length.
+Isosceles: Two sides are of equal length, while the third is different.
+Scalene: All three sides are of different lengths.
+To be a valid triangle, the sum of the lengths of the two shortest sides must be greater than the length of the longest side, and every side must have a length greater than 0. If either of these conditions is not satisfied, the triangle is invalid.
+
+Write a function that takes the lengths of the three sides of a triangle as arguments and returns one of the following four strings representing the triangle's classification: 'equilateral', 'isosceles', 'scalene', or 'invalid'. */
+
+/* PEDAC
+
+P -> Understanding the Problem
+------------------------------
+Input: 3 side lengths
+- 
+
+Output: string 
+- 
+
+
+Rules/Important Points:
+ - equilateral all sides are the same
+ - isosceles two sides are equal and 1 is different
+ - scalane all different length
+
+ valid tri 
+  - every side is > 0 
+  - 2 shortest sides > longest side
+
+E -> Examples/Test Cases
+
+-- Mental Model Intermission --
+  - Do I have a general idea of how I'm going to get from input to output?
+  check sides are > 0
+  sort the sides by length to get shortest 2 
+  check if the sum of the first 2 is greater than the last
+  
+  check num of equal sides
+  side 1 === side 2 side 1 === side 3 side 2 === 3
+  based on num of sides return triangle type
+
+
+D -> Data Structure
+-------------------
+What data structure am I going to use? Array or object?
+array
+
+
+A -> Algorithm
+--------------
+- Step-by-step implementation details on HOW to get from input to output
+- Don't name specific methods or syntax
+put 3 strings in array
+- invalid guard clause
+  - sort array and filter > 0 
+  -if the length of array is < 3 then there exists a side that is < 0 
+  -else 
+    -if 1st element plus 2nd element <= 3rd element 
+      -return invalid
+set equal sides to 0 
+iter through array side
+  arr[i] => [0]
+    iter through array starting 1 ahead j = 1
+    arr[i] === arr[j]
+
+  
+
+
+C -> Coding with Intent
+----------------------- */
+
+/* function triangle(s1, s2, s3) {
+  let equalCount = 0;
+  let arrSide = [s1,s2,s3].sort((a,b) => a-b).filter((ele) => ele > 0);
+  if (arrSide.length < 3) {
+    return "invalid";
+  }
+  if (arrSide[0]+arrSide[1] <= arrSide[2]) {
+    return "invalid"
+  }
+  if (s1 === s2 && s2 === s3) {
+    return "equilateral";
+  }
+  if (s1 === s2 || s2 === s3 || s1 === s3) {
+    return "isosceles"
+  }
+  return "scalene";
+}
+
+console.log(triangle(3, 3, 3));        // "equilateral"
+console.log(triangle(3, 3, 1.5));      // "isosceles"
+console.log(triangle(3, 4, 5));        // "scalene"
+console.log(triangle(0, 3, 3));        // "invalid"
+console.log(triangle(3, 1, 1));        // "invalid" */
+
+/* Fibonacci Number Location By Length
+The Fibonacci series is a series of numbers (1, 1, 2, 3, 5, 8, 13, 21, ...) such that the first two numbers are 1 by definition, and each subsequent number is the sum of the two previous numbers. Fibonacci numbers often appear in mathematics and nature.
+
+Computationally, the Fibonacci series is a simple series, but the results grow at an incredibly rapid rate. For example, the 100th Fibonacci number is 354,224,848,179,261,915,075—that's enormous, especially considering that it takes six iterations just to find the first 2-digit Fibonacci number.
+
+Write a function that calculates and returns the index of the first Fibonacci number that has the number of digits specified by the argument. (The first Fibonacci number has an index of 1.)
+
+You may assume that the argument is always an integer greater than or equal to 2. 
+
+PEDAC
+
+P -> Understanding the Problem
+------------------------------
+Input: big int representing num digits
+- 
+
+Output: big int representing index 
+- 
+
+
+Rules/Important Points:
+- 1 indexed 
+- fib is sum of 2 previous numbers with the first two numbers starting as 1 
+
+E -> Examples/Test Cases
+
+-- Mental Model Intermission --
+  - Do I have a general idea of how I'm going to get from input to output?
+  - create array of each number in sequence
+  - push next number to sequence
+  - check if number has the length of number of digits
+    - if it does then return the length of the array
+
+
+D -> Data Structure
+-------------------
+What data structure am I going to use? Array or object?
+array to store each fib number
+
+
+A -> Algorithm
+--------------
+- Step-by-step implementation details on HOW to get from input to output
+- Don't name specific methods or syntax
+take in bigint num digits
+check if numdigits is 1n if it is return 1n 
+create array [1,1]
+set len = arr.length
+set var arr[len-1] + arr[len-2]
+
+push var
+if string object of var length is numdigits
+return big int of arr length
+
+C -> Coding with Intent
+----------------------- */
+/* 
+function findFibonacciIndexByLength(numDigits) {
+  let fibArr = [1n, 1n];
+  let i = 0;
+  while (true) {
+    // Generate the next Fibonacci number
+    let nextFib = fibArr[fibArr.length - 1] + fibArr[fibArr.length - 2];
+    // Add this number to the sequence
+    fibArr.push(nextFib);
+
+    // Check the length of this number
+    if (BigInt(nextFib.toString().length) === numDigits) {
+      
+      // Return its position (+1 because we're considering an 1-indexed sequence)
+      return BigInt(fibArr.length); 
+    }
+  }
+}
+
+console.log(findFibonacciIndexByLength(2n) === 7n);    // 1 1 2 3 5 8 13
+console.log(findFibonacciIndexByLength(3n) === 12n);   // 1 1 2 3 5 8 13 21 34 55 89 144
+console.log(findFibonacciIndexByLength(10n) === 45n);
+console.log(findFibonacciIndexByLength(16n) === 74n);
+console.log(findFibonacciIndexByLength(100n) === 476n);
+console.log(findFibonacciIndexByLength(1000n) === 4782n);
+console.log(findFibonacciIndexByLength(10000n) === 47847n);
+
+// The last example may take a minute or so to run. */
