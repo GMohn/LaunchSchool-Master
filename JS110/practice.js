@@ -439,7 +439,7 @@ Iterate through string
 
 */
 
-function repeatedSubstring (inputString) {
+/* function repeatedSubstring (inputString) {
   const LEN = inputString.length;
   let chunk;
 
@@ -453,7 +453,7 @@ function repeatedSubstring (inputString) {
 
 console.log(repeatedSubstring("ababab")); // ["ab", 3]
 console.log(repeatedSubstring("abcde"));// ["abcde", 1]
-
+ */
 
 /*
 Chris
@@ -500,4 +500,22 @@ Algorithm:
       - else, the substr is not equal to next adj substr
         - break and check next element in validSubstring array
 */
+
+// Create a byte array of size 480000
+let bytes = new Uint8Array(480000);
+
+// Start the timer
+let start = performance.now();
+
+// Iterate over the byte array
+for(let i = 0; i < bytes.length; i++) {
+    bytes[i] = i % 256; // Do something with bytes[i]
+}
+
+// Stop the timer
+let end = performance.now();
+
+// Calculate and log the time taken
+let timeTaken = end - start;
+console.log(`Time taken: ${timeTaken} ms`);
 

@@ -705,7 +705,7 @@ populate values with count / string.length
 return object
 C -> Coding with Intent
 -----------------------*/
-
+/* 
 function letterPercentages(str) {
   let lowercase = 0;
   let uppercase = 0;
@@ -736,7 +736,7 @@ letterPercentages('AbCd +Ef');
 
 letterPercentages('123');
 // { lowercase: "0.00", uppercase: "0.00", neither: "100.00" }
-
+ */
 /* Triangle Sides
 A triangle is classified as follows:
 
@@ -917,3 +917,193 @@ console.log(findFibonacciIndexByLength(1000n) === 4782n);
 console.log(findFibonacciIndexByLength(10000n) === 47847n);
 
 // The last example may take a minute or so to run. */
+
+/* 
+https://www.codewars.com/kata/526571aae218b8ee490006f4/train/javascript
+Write a function that takes an integer as input, and returns the number of bits that are equal to one in the binary representation of that number. You can guarantee that input is non-negative.
+
+Example: The binary representation of 1234 is 10011010010, so the function should return 5 in this case */
+
+/* P -> Understanding the Problem
+------------------------------
+Input: 
+- integer
+
+Output:
+- integer representing the number of bits equal to 1
+
+
+Rules/Important Points:
+- The integer is in base 10 and should be converted to base 2 in order to count bits
+- All input integers are non negative so the most significant bit (furthest to left) never represents the sign of the integer (unsigned int)
+
+E -> Examples/Test Cases
+1234 is 10011010010 expected output is 5 
+to convert to binary, the least significant bit represents 2^0 then the next 2^1 ... 2^n where n represents the most significant bits exponent 
+
+-- Mental Model --
+to get integer 10 in binary we add 2^1 + 2^3 to get 1010 where each place is represented as 2^3 => 1 2^2 => 0 2^1 => 2 2^0 => 0 therefore 8 + 2 = 10
+1. populate array as binary representation 
+2. filter array to only contain 1
+3. return the length of the array 
+  
+
+D -> Data Structure
+-------------------
+build array containing the bit representation of the integer then filter to only store 1s and get length
+
+
+A -> Algorithm
+--------------
+Set binaryArr
+- dividing the number by 2 and storing the remainder until the number becomes 0
+- integer to binary
+  - set currentVal to inputInteger
+  - loop while currentVal > 0 
+    - push currentVal % 2 
+    - currentVal = currentVal/2
+- filter out the 0s from the binary array and return length of binaryArray
+
+C -> Coding with Intent
+----------------------- */
+
+var countBits = function(integer) {
+  // Program Me
+  let binaryArr = [];
+  currentVal = integer;
+  while (currentVal > 0) {
+    binaryArr.push(currentVal % 2);
+    currentVal = Math.floor(currentVal / 2);
+  }
+  
+  return(binaryArr.reverse().filter((num) => num === 1).length);
+  
+};
+console.log(countBits(10));
+
+/* . You should get your thought process down, along with any struggles, misconceptions and bugs you encountered and how you overcame them.
+thought process: 
+turn integer to binary representation 
+story each digit in array and keep only the 1s
+count the 1s with length method 
+bugs: 
+had 
+let binaryArr = [];
+  let n = 0;
+  while (2**n <= integer) {
+    n++;
+  }
+  => n--;
+  binaryArr.push(1);
+  let currentVal = integer - 2**n;
+    for (let i = n - 1; i >= 0; i--) { => for (let i = n; i >= 0; i--) {
+    if (2**i >= currentVal) {
+      binaryArr.push(0);
+      continue;
+    }
+    binaryArr.push(1)
+    currentVal -= 2**i
+  }
+but if countBits(2) is called then while loop would reach n = 2 and would push 1 for 2^2
+  then loop 2 times for 2^1 and 2^0 but expected array was [1,0]
+sol: added     
+- once it exceeds decrement to get correct exponent to pedac
+- n--;
+- changed if (2**i > currentVal)
+
+bug: the msb shouldnt be calculated seperately and instead all be built in the same loop
+original alg: 
+Set binaryArr
+- integer to binary
+  - get the highest 2^n value that does not exceed the integer value
+    - once it exceeds decrement to get correct exponent 
+  - store n as most significant bit
+  - push 1 to binaryArr
+  - loop n - 1 times starting from biggest iterator (i) and decrement
+    - if the 2^i >= currentVal 
+      - push 0 to binaryArray
+    - else => 2^i <= currentVal
+      - push 1 to binaryArray
+      - subtract 2^i from currentVal
+- filter out the 0s from the binary array and return length of binaryArray
+
+solution: 
+- dividing the number by 2 and storing the remainder until the number becomes 0
+- integer to binary
+  - set currentVal to inputInteger
+  - loop while currentVal > 0 
+    - push currentVal % 2 
+    - currentVal = currentVal/2
+
+bug: array was backwards with the most significant bit at the end. although it does not matter for this problem, as im just counting the 1s i decided to use the reverse array method 
+ */
+
+/* 
+https://www.codewars.com/kata/52597aa56021e91c93000cb0
+Write an algorithm that takes an array and moves all of the zeros to the end, preserving the order of the other elements.
+
+moveZeros([false,1,0,1,2,0,1,3,"a"]) // returns[false,1,1,2,1,3,"a",0,0]
+
+P -> Understanding the Problem
+------------------------------
+Input:
+- array
+
+Output:
+- modified array with 0s at the end 
+
+
+Rules/Important Points:
+- the order of non zero elements should be the same
+
+E -> Examples/Test Cases
+moveZeros([false,1,0,1,2,0,1,3,"a"]) // returns[false,1,1,2,1,3,"a",0,0]
+
+-- Mental Model --
+count the number of non elements
+bubble up all the non zero elements to the front of the array
+set the 0 elements to the next non zero element
+add the 0s to the end of the array
+[0,1,2] => [1,1,2] (count = 1 index) => [1,1,2] (count = 2 index) => [1,2,2] => end of loop, count = 2 index => arr[count] = 0 => [1,2,0]
+D -> Data Structure
+-------------------
+mutate given array in place
+
+
+A -> Algorithm
+--------------
+- set count to 0 
+- count the number of non zero elements
+- traverse the array 
+- if the current element is not 0 
+  - then place current element where count points to 
+  - increment count
+after loop 
+set 0 from index count to the length of the array 
+
+C -> Coding with Intent
+-----------------------*/
+function moveZeros(arr) {
+  let count = 0;
+  arr.forEach((ele) => {
+    if (ele !== 0) {
+      arr[count] = ele;
+      count++;
+    }
+  });
+  for (count = count; count < arr.length; count++) {
+    arr[count] = 0;
+  }
+  return arr;
+}
+console.log(moveZeros([false,1,0,0,2,0,1,3,"a"]));
+
+/* You should get your thought process down, along with any struggles, misconceptions and bugs you encountered and how you overcame them.
+thought process: 
+replace all the zeroes with the elements that are non zero
+keep track of the next available index by counting non zeroes and traversing the array
+count doesnt increment unless its non zero therefore count ends at the index of the first 0 in the array
+
+bugs: had  for (let count = count; count < arr.length; count++)
+got an error saying cannot access 'count before initialization
+removed let because I did not want to shadow the variable */
